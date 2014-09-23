@@ -54,7 +54,7 @@ var APP = APP || {};
 
 	APP.router = {
 		init: function() {
-			console.log("kickoff router"); // runs router function to initialize hashes
+			console.log("kickoff router"); // een console.log log om te kijken of de router start
 	
 			routie({
 				'about': function() {
@@ -78,8 +78,8 @@ var APP = APP || {};
 	APP.sections = {
 		init: function() {
 			console.log('kickoff sections');
-			this.about(); // kickoff about section
-			this.movies(); // kickoff movies section
+			this.about(); // this verwijst naar APP.sections omdat de methode in dezelfde scope zit
+			this.movies(); 
 		},
 		about: function() {
 			// selecteer de juiste section in de html als variabele
