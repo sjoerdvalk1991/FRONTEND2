@@ -1,0 +1,46 @@
+var App = App || {};
+
+(function(){
+
+
+App.mycontent = {
+	movies: [{
+		title: "The Matrix",
+		releasedate: "2000",
+		cover: "cover.jpg"
+	}],
+
+	about: {
+		title: "Over deze app",
+		description: "Deze app is zo awesome dat je hoofd ontploft!"
+	}		
+}
+
+
+App.router = {
+	init: function(){		
+		routie({
+		    'movies': function() {
+		    	console.log("Dit is de movie pagina");
+		    	var moviedata = document.getElementById('moviedata');
+		    	Transparency.render(moviedata, App.mycontent.movies[0]);
+		    
+
+		    },
+		    'about': function() {
+		    	console.log("Dit is de about pagina");
+		    	var aboutdata = document.getElementById('aboutdata');
+		    	Transparency.render(aboutdata, App.mycontent.about);
+		    }
+		});
+	}
+}
+
+App.controller = function(){
+
+}
+
+App.router.init();
+
+console.log("ik werk nog");
+})();

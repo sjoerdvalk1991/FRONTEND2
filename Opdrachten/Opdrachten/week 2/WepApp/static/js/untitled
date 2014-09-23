@@ -1,0 +1,112 @@
+var APP = APP || {};
+
+(function(){
+
+	APP.controller = {
+		init: function() {
+		console.log('test');
+		APP.router.init();
+		APP.sections.init();
+	}
+},
+
+	APP.mycontent = {
+	movies: [{
+		title: "The Matrix",
+		releasedate: "2000",
+		cover: "cover.jpg"
+	}],
+
+	about: {
+		title: "Over deze app",
+		description: "Deze app is zo awesome dat je hoofd ontploft!"
+	}
+
+
+
+
+
+	},
+
+	APP.router = {
+		init: function() {
+
+			routie({
+
+		    'movies': function() {
+
+		    	console.log('moviesroute');
+		    	APP.sections.movies();
+
+		    },
+		    'about': function() {
+
+		    	console.log('aboutroute');
+		    	APP.router.change();
+
+
+		    }
+			});
+		},
+
+		change: function() {
+			console.log('testje');
+
+			var route = window.location.hash.slice(1),
+                sections = document.querySelectorAll('section[data-route]'),
+                section = document.querySelectorAll('#' + route)[0];
+                APP.sections.toggle(route);
+
+
+		if (section) {
+            	for (var i=0; i < sections.length; i++){
+            		sections[i].classList.remove('active');
+            	}
+             	section.classList.add('active');
+             	APP.sections.toggle(route);
+            }
+
+            if (!route) {
+            	sections[0].classList.add('active');
+
+            }
+
+		}
+	};
+
+	APP.sections = {
+		init: function() {
+		},
+		movies: function() {
+		    	var moviedata = document.getElementById('moviez');
+		    	Transparency.render(moviedata, APP.mycontent.movies);
+		    	APP.router.change();
+
+		    },
+		 about: function() {
+		 		var aboutdata = document.getElementById('about');
+		    	Transparency.render(aboutdata, APP.mycontent.about);
+
+
+		    },
+
+		 toggle: function(section) {
+		 	console.log(section);
+            	document.querySelector('#' + section).classList.toggle('active');
+            }
+
+
+
+
+		}
+
+
+
+	APP.controller.init();
+
+
+
+
+
+
+})();

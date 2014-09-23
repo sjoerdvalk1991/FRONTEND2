@@ -1,1 +1,6 @@
-style.css
+ section {
+		display:none;
+	}
+section.active {
+		display:block;
+	}

@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
     <head>
@@ -5,38 +6,56 @@
         <meta name="description" content="Web App V1, basic JavaScript Skeleton">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>My Favorite Movies</title>
-        <link rel="stylesheet" href="static/css/main.css">
+     <!--    <link rel="stylesheet" href="static/css/style.css"> -->
         <link rel="author" href="humans.txt">
+        <link rel="stylesheet" href="static/css/main.css" type="text/css" />
     </head>
     <body>
+
     	<header>
 			<nav>
 				<ul>
-					<li><a href="#/about">About</a></li>
-					<li><a href="#/movies">Movies</a></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#movies">Movies</a></li>
+
 				</ul>
 			</nav>
 		</header>
+
+<!--  Transparency is een semantic library dus door semantisch incorrecte html kan de Transparency library falen -->
 		<main id="content">
-			<section data-route="about">
-				<section>
+			<section data-route="about" id="about">
 					<header>
-						<h1 data-bind="title"></h1>
-						<p data-bind="description"></p>
+						<!-- ID die Transparency kan gebruiken -->
+						<div id="abouts">
+							<!-- data-bind voor het toe-eigenen van object-eigeschappen  -->
+							<h1 data-bind="title"></h1>
+							<span data-bind="description"></span>
+						</div>
 					</header>
-				</section>
 			</section>
-				<section data-route="movies">
-				<section>
+
+
+			<section data-route="movies" id="movies">
 					<header>
-						<p data-bind="description"></p>
-						<h1 data-bind="title"></h1>
+						<div id="moviez">
+							<h1 data-bind="title"></h1>
+							<span data-bind="releasedate"></span><br />
+							<span data-bind="cover"></span>
+
+						</div>
 					</header>
-				</section>
 			</section>
+
 		</main>
-		<script src="static/js/vendor/transparency.min.js"></script>
+
+
+		<!-- Voor routing van de objecten naar de html -->
 		<script src="static/js/vendor/routie.js"></script>
-        <script src="static/js/app.js"></script>
+		<!-- Voor het printen van de object-eigenschappen in de html -->
+		<script src="static/js/vendor/transparency.min.js"></script>
+		<script src="static/js/utils.js"></script>
+        <script src="static/js/apps.js"></script>
+
     </body>
 </html>
