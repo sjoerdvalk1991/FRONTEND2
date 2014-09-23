@@ -64,6 +64,11 @@ var APP = APP || {};
 				'movies': function() {
 					APP.sections.toggle('section[data-route="movies"]'); // start de toggle met de geselecteerde section
 					console.log('moviespagina geladen');
+				},
+
+				'*': function() {
+					APP.sections.toggle('section[data-route="movies"]'); // start de toggle met de geselecteerde section
+					console.log('moviespagina geladen');
 				}
 			});
 		}
