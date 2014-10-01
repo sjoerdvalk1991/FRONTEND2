@@ -1,20 +1,71 @@
 
 // ----------------------------------------------------- //
 // APP JS DEELTOETS 1 - SJOERD VALK
-// ----------------------------------------------------- //
 
 // De namespace zorgt ervoor dat je geen conflicten krijgt met eventuele andere javascript bestanden met dezelfde soort objecten.
 
 var APP = APP || {};
 
 (function() {
-	APP.controller = {
+
+	APP.settings = {
+		movieUrl : 'http://www.dennistel.nl/movies'
+	}
+
+
+
+APP.controller = {
 		init: function() {
 			console.log ('kickoff app');
 			APP.router.init(); // start de init methode van het router object
-			APP.sections.init(); // start de init methode van het sections object
+			APP.sections.init();
+			// APP.worker.init();
+							 // start de init methode van het sections object
 		}
 	}
+
+APP.xhr = {
+	trigger: function (type, url, success, data) {
+		var req = new XMLHttpRequest;
+		req.open(type, url, true);
+
+		req.setRequestHeader('Content-type','application/json');
+
+		type === 'POST' ? req.send(data) : req.send(null);
+
+		req.onreadystatechange = function() {
+			if (req.readyState === 4) {
+				if (req.status === 200 || req.status === 201) {
+					success(req.responseText);
+				}
+			}
+		}
+	}
+}
+
+APP.store = {
+
+init: function(){
+
+
+
+},
+
+getData: function(){
+
+
+},
+
+setData: function(){
+
+
+}
+
+
+
+}
+
+
 
 
 	APP.moviecontent = {
@@ -23,32 +74,7 @@ var APP = APP || {};
 			title: "About this app",
 			description: "All of the content on this app and the website has been requested directly by young people.  The Your Questions are real questions from real young people as are the words in the Sextionary – and therefore we believe they are valid aspects of the site."
 		},
-		movies: [
-			{
-				title: "Shawshank Redemption",
-				releaseDate: "14 October 1994",
-				description:"Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
-				cover: "images/shawshank-redemption.jpg"
-			},
-			{
-				title: "The Godfather",
-				releaseDate: "24 March 1972",
-				description:"The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
-				cover: "images/the-godfather.jpg"
-			},
-			{
-				title: "Pulp Fiction",
-				releaseDate: "14 October 1994",
-				description:"The lives of two mob hit men, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
-				cover: "images/pulp-fiction.jpg"
-			},
-			{
-				title: "The Dark Knight",
-				releaseDate: "18 July 2008",
-				description:"When Batman, Gordon and Harvey Dent launch an assault on the mob, they let the clown out of the box, the Joker, bent on turning Gotham on itself and bringing any heroes down to his level.",
-				cover: "images/the-dark-knight.jpg"
-			}
-		]
+		movies: []
 	}
 
 
@@ -87,10 +113,14 @@ var APP = APP || {};
 			Transparency.render(aboutSection, APP.moviecontent.about) 
 		},
 		movies: function() {
-			 //selecteer de juiste section in de html als variabele
-			var moviesSection = document.querySelector('section[data-route="movies"]');
-			// transparancy wordt aangeroepen om de data te koppelen aan de section in de html
-			Transparency.render(moviesSection, APP.moviecontent.movies, {
+			//selecteer de juiste section in de html als variabele
+			var moviesSection = document.querySelector('[data-route=movies]');
+			if(localStorage.getItem('movies')){
+			APP.xhr.trigger('GET', APP.settings.movieUrl, function(response){
+				console.log(response);
+				var movieData = JSON.parse(response);
+				
+			Transparency.render(moviesSection, movieData, {
 				cover: {
 			// Dit zorgt ervoor dat de waarde van cover in het src="" attribuut terecht komt.
 					src: function() {
@@ -98,7 +128,10 @@ var APP = APP || {};
 				    }
 			}
 			});
+			});
+		
 		},
+
 		toggle: function(section) {
 			// voegt alle sections in de #content toe aan deze variabele
 			var sections = document.querySelectorAll('#content section');
@@ -107,13 +140,33 @@ var APP = APP || {};
 				sections[i].classList.remove('active');
 			}
 			// show the current section by add class util function
-			if (!document.querySelector(section).classList.contains('active')) {
 			    document.querySelector(section).classList.add('active');
-			}
 		}
 	}
 
 
-	APP.controller.init(); // initialiseer de app - start de app
+
+// APP.worker = {
+
+// init: function(){
+
+// this.newWorker();
+
+// },
+
+// newWorker: function(){
+
+// var worker = new Worker('vendor/task.js');
+// worker.addEventListener('message', function(e) {
+//   console.log('Worker said: ', e.data);
+// }, false);
+
+// worker.postMessage('Hello World');
+
+// }
+
+// }
+
+APP.controller.init(); // initialiseer de app - start de app
 
 })();
